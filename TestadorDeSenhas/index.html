@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testador de Senhas - Rastros Digitais</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --primary: #3b82f6;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --excellent: #8b5cf6;
+            --surface: #334155;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        p.subtitle {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            padding-right: 3rem;
+            border: 2px solid var(--surface);
+            border-radius: 0.5rem;
+            background: var(--bg-color);
+            color: white;
+            font-size: 1.25rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+
+        .toggle-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+        }
+
+        .toggle-btn:hover {
+            color: white;
+        }
+
+        .meter-container {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .meter-segment {
+            flex: 1;
+            height: 8px;
+            background: var(--surface);
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .status-text {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+        }
+
+        .time-to-crack {
+            font-size: 1rem;
+            color: #cbd5e1;
+            margin-bottom: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+        }
+
+        .time-highlight {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .feedback {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            text-align: left;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            min-height: 100px;
+            border-left: 4px solid var(--surface);
+            transition: all 0.3s ease;
+        }
+
+        .feedback ul {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+
+        .feedback li {
+            margin-bottom: 0.25rem;
+        }
+
+        .pwned-warning {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            font-weight: bold;
+            display: none;
+            border: 1px solid var(--danger);
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 0.5rem;
+            background: var(--surface);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: #475569;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        .disclaimer {
+            margin-top: 1.5rem;
+            font-size: 0.75rem;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        /* Status Colors */
+        .status-0 .meter-segment:nth-child(1) {
+            background: var(--danger);
+        }
+
+        .status-1 .meter-segment:nth-child(1),
+        .status-1 .meter-segment:nth-child(2) {
+            background: var(--warning);
+        }
+
+        .status-2 .meter-segment:nth-child(1),
+        .status-2 .meter-segment:nth-child(2),
+        .status-2 .meter-segment:nth-child(3) {
+            background: var(--success);
+        }
+
+        .status-3 .meter-segment {
+            background: var(--excellent);
+        }
+
+        .status-text-0 {
+            color: var(--danger);
+        }
+
+        .status-text-1 {
+            color: var(--warning);
+        }
+
+        .status-text-2 {
+            color: var(--success);
+        }
+
+        .status-text-3 {
+            color: var(--excellent);
+        }
+
+        .feedback-0 {
+            border-left-color: var(--danger);
+        }
+
+        .feedback-1 {
+            border-left-color: var(--warning);
+        }
+
+        .feedback-2 {
+            border-left-color: var(--success);
+        }
+
+        .feedback-3 {
+            border-left-color: var(--excellent);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Testador de Senhas</h1>
+        <p class="subtitle">Descubra quão forte é a sua senha baseada no NIST SP 800-63B.<br><strong>Sua senha é testada
+                localmente.</strong></p>
+
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Digite uma senha..." autocomplete="off">
+            <button type="button" class="toggle-btn" id="toggleVisibility" title="Mostrar/Ocultar Senha"
+                aria-label="Mostrar ou ocultar senha">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20"
+                    height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="meter-container" id="meter">
+            <div class="meter-segment"></div>
+            <div class="meter-segment"></div>
+            <div class="meter-segment"></div>
+            <div class="meter-segment"></div>
+        </div>
+
+        <div class="status-text" id="status-text">Aguardando...</div>
+
+        <div class="time-to-crack" id="time-to-crack">
+            Tempo estimado para quebra: <br><span class="time-highlight" id="time-val">-</span>
+        </div>
+
+        <div class="feedback" id="feedback">
+            Comece a digitar para ver as dicas de segurança.
+        </div>
+
+        <div class="pwned-warning" id="pwned-warning">
+            ⚠️ ALERTA: Esta senha já apareceu em vazamentos de dados públicos! Nunca a utilize.
+        </div>
+
+        <div class="action-btns">
+            <button class="btn" id="btn-generate">Gerar Frase-Senha (Exemplo)</button>
+            <button class="btn btn-primary" id="btn-check-leak">Verificar Vazamento (Online)</button>
+        </div>
+
+        <div class="disclaimer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="14"
+                height="14">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            Privacidade: O teste de vazamento usa o método k-Anonymity. Sua senha nunca é enviada ao servidor.
+        </div>
+    </div>
+
+    <script>
+        const commonPasswords = ['123456', 'password', '123456789', '12345', '12345678', '111111', '1234567', 'sunshine', 'qwerty', 'iloveyou', 'admin', '123123', 'senha', 'senha123', 'brasil', 'mengo', 'flamengo', 'vasco'];
+        const wordList = ['Bateria', 'Cachorro', 'Teclado', 'Amarelo', 'Janela', 'Foguete', 'Estrela', 'Montanha', 'Dinossauro', 'Abacate', 'Violao', 'Espelho', 'Geladeira', 'Caneta'];
+
+        const pwdInput = document.getElementById('password');
+        const toggleBtn = document.getElementById('toggleVisibility');
+        const meterContainer = document.getElementById('meter');
+        const statusText = document.getElementById('status-text');
+        const timeVal = document.getElementById('time-val');
+        const feedback = document.getElementById('feedback');
+        const pwnedWarning = document.getElementById('pwned-warning');
+        const btnGenerate = document.getElementById('btn-generate');
+        const btnCheckLeak = document.getElementById('btn-check-leak');
+
+        const iconEye = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>`;
+        const iconEyeOff = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /></svg>`;
+
+        toggleBtn.addEventListener('click', () => {
+            if (pwdInput.type === 'password') {
+                pwdInput.type = 'text';
+                toggleBtn.innerHTML = iconEyeOff;
+            } else {
+                pwdInput.type = 'password';
+                toggleBtn.innerHTML = iconEye;
+            }
+        });
+
+        btnGenerate.addEventListener('click', () => {
+            let phrase = [];
+            for (let i = 0; i < 4; i++) {
+                phrase.push(wordList[Math.floor(Math.random() * wordList.length)]);
+            }
+            pwdInput.value = phrase.join('-');
+            pwdInput.type = 'text';
+            toggleBtn.innerHTML = iconEyeOff;
+            pwdInput.dispatchEvent(new Event('input'));
+        });
+
+        function calculateEntropy(pwd) {
+            let poolSize = 0;
+            if (/[a-z]/.test(pwd)) poolSize += 26;
+            if (/[A-Z]/.test(pwd)) poolSize += 26;
+            if (/[0-9]/.test(pwd)) poolSize += 10;
+            if (/[^A-Za-z0-9]/.test(pwd)) poolSize += 32;
+
+            if (poolSize === 0) return 0;
+            return pwd.length * Math.log2(poolSize);
+        }
+
+        function formatTime(seconds) {
+            if (seconds < 1) return 'Instantâneo';
+            if (seconds < 60) return `${Math.round(seconds)} segundos`;
+            if (seconds < 3600) return `${Math.round(seconds / 60)} minutos`;
+            if (seconds < 86400) return `${Math.round(seconds / 3600)} horas`;
+            if (seconds < 31536000) return `${Math.round(seconds / 86400)} dias`;
+
+            let years = seconds / 31536000;
+            if (years < 100) return `${Math.round(years)} anos`;
+            if (years < 1000) return `${Math.round(years / 100)} séculos`;
+            if (years < 1000000) return `${Math.round(years / 1000).toLocaleString('pt-BR')} mil anos`;
+            if (years < 1000000000) return `${Math.round(years / 1000000).toLocaleString('pt-BR')} milhões de anos`;
+            if (years < 1000000000000) return `${Math.round(years / 1000000000).toLocaleString('pt-BR')} bilhões de anos`;
+
+            return `${Math.round(years / 1000000000000).toLocaleString('pt-BR')} trilhões de anos (Literalmente a idade do Universo!)`;
+        }
+
+        // Hash SHA-1 para consultar HIBP
+        async function sha1(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+        }
+
+        btnCheckLeak.addEventListener('click', async () => {
+            const val = pwdInput.value;
+            if (!val) return;
+
+            pwnedWarning.style.display = 'none';
+            btnCheckLeak.textContent = 'Verificando...';
+            btnCheckLeak.disabled = true;
+
+            try {
+                const hash = await sha1(val);
+                const prefix = hash.substring(0, 5);
+                const suffix = hash.substring(5);
+
+                // k-Anonymity: envia apenas os 5 primeiros caracteres do hash
+                const response = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
+                const text = await response.text();
+
+                const hashes = text.split('\n');
+                const leaked = hashes.some(h => h.startsWith(suffix));
+
+                if (leaked) {
+                    const count = hashes.find(h => h.startsWith(suffix)).split(':')[1].trim();
+                    pwnedWarning.innerHTML = `⚠️ ALERTA: Esta senha já apareceu em <strong>${count}</strong> vazamentos de dados públicos! Nunca a utilize.`;
+                    pwnedWarning.style.display = 'block';
+
+                    // Força status de "Muito Fraca" devido ao vazamento
+                    meterContainer.className = 'meter-container status-0';
+                    statusText.className = 'status-text status-text-0';
+                    statusText.textContent = 'COMPROMETIDA';
+                } else {
+                    alert("Boas notícias! Esta senha não foi encontrada em vazamentos públicos conhecidos (Have I Been Pwned).");
+                }
+            } catch (e) {
+                alert("Erro ao verificar vazamentos. Verifique a conexão com a internet.");
+            } finally {
+                btnCheckLeak.textContent = 'Verificar Vazamento (Online)';
+                btnCheckLeak.disabled = false;
+            }
+        });
+
+        pwdInput.addEventListener('input', () => {
+            const val = pwdInput.value;
+            const len = val.length;
+
+            meterContainer.className = 'meter-container';
+            statusText.className = 'status-text';
+            feedback.className = 'feedback';
+            pwnedWarning.style.display = 'none';
+
+            if (len === 0) {
+                statusText.textContent = 'Aguardando...';
+                timeVal.textContent = '-';
+                feedback.innerHTML = 'Comece a digitar para ver as dicas de segurança.';
+                return;
+            }
+
+            const entropy = calculateEntropy(val);
+            const guessesPerSecond = 100000000000;
+            const secondsToCrack = Math.pow(2, entropy) / guessesPerSecond;
+
+            timeVal.textContent = formatTime(secondsToCrack);
+
+            let score = 0;
+            let msgs = [];
+            let isCommon = false;
+
+            if (commonPasswords.some(cp => val.toLowerCase().includes(cp))) {
+                isCommon = true;
+                msgs.push('Contém termos extremamente comuns. Senhas fáceis são quebradas instantaneamente por dicionários.');
+            }
+
+            // Verifica se é apenas número (possível data, telefone ou CPF)
+            if (/^\d+$/.test(val)) {
+                msgs.push('Usar apenas números facilita ataques de Engenharia Social (Ex: datas de aniversário, CPF, telefone).');
+                score = 0;
+            } else {
+                if (len < 8) {
+                    msgs.push('Senha muito curta. O NIST exige no mínimo 8 caracteres.');
+                } else if (len >= 8 && len < 15) {
+                    if (!isCommon) score = 1;
+                    if (entropy > 50 && !isCommon) score = 2;
+                    msgs.push('Tamanho aceitável, mas experimente usar uma <strong>frase-senha</strong> (passphrase) de 15+ caracteres para ser realmente seguro (ex: palavras aleatórias).');
+                } else if (len >= 15) {
+                    if (!isCommon) score = 3;
+                    else score = 1;
+                    msgs.push('Excelente tamanho! Frases-senha (passphrases) são fáceis de lembrar e quase impossíveis de quebrar matematicamente.');
+                }
+            }
+
+            if (isCommon) score = 0;
+
+            meterContainer.classList.add(`status-${score}`);
+            statusText.classList.add(`status-text-${score}`);
+            feedback.classList.add(`feedback-${score}`);
+
+            const labels = ['Muito Fraca', 'Fraca', 'Boa', 'Excelente'];
+            statusText.textContent = labels[score];
+
+            if (score === 3) {
+                msgs.unshift('Sua senha atende perfeitamente às recomendações do NIST SP 800-63B!');
+            }
+
+            feedback.innerHTML = msgs.length > 0
+                ? `<ul>${msgs.map(m => `<li>${m}</li>`).join('')}</ul>`
+                : 'Senha adequada.';
+
+        });
+    </script>
+
+</body>
+
+</html>
