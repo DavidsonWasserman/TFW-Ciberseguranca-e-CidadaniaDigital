@@ -31,7 +31,7 @@ export default async function twoFactorRoutes(app: FastifyInstance) {
     app.post<{ Body: { code: string } }>('/2fa/disable', async (req, reply) => {
         const user = users.get(req.user.sub)!;
         if (!user.totpSecret || !(await check(req.body.code, user.totpSecret)))
-            return reply.code(401).send({ error: 'Código inválido' });
+            return reply.code(401).send({ error: 'Código de verificação inválido' });
 
         user.totpSecret = undefined;
         return { message: '2FA desativado' };

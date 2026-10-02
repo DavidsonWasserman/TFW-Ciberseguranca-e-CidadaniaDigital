@@ -15,6 +15,15 @@ export async function requireAuth(req: FastifyRequest, reply: FastifyReply) {
         await req.jwtVerify();
         if (req.user.purpose !== 'full') throw new Error();
     } catch {
-        return reply.code(401).send({ error: 'Não autenticado' });
+        return reply.code(401).send({ error: 'Token inválido ou expirado' });
+    }
+}
+
+export async function require2faToken(req: FastifyRequest, reply: FastifyReply) {
+    try {
+        await req.jwtVerify();
+        if (req.user.purpose !== '2fa') throw new Error();
+    } catch {
+        return reply.code(401).send({ error: 'Token temporário inválido ou expirado' });
     }
 }
