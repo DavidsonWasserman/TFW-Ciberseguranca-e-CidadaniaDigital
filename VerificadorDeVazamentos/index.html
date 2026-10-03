@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador de Vazamentos - TFW Cibersegurança</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Canvas para efeito Matrix Rain de fundo -->
+    <canvas id="matrix-bg"></canvas>
+
+    <div class="main-content">
+
+        <!-- Cabeçalho -->
+        <header class="header">
+            <h1 id="main-title">Verificador de Vazamentos</h1>
+            <div class="cyber-line"></div>
+            <p class="subtitle">
+                Verifique se o seu e-mail foi comprometido em vazamentos de dados públicos.<br>
+                <strong>Seus dados não são armazenados.</strong>
+            </p>
+        </header>
+
+        <!-- Seção de busca -->
+        <section class="search-section">
+            <div class="input-group">
+                <input type="email" id="email-input" placeholder="Digite um e-mail para verificar..."
+                    autocomplete="off" spellcheck="false">
+                <button type="button" class="btn-scan" id="btn-scan">VERIFICAR</button>
+            </div>
+
+            <!-- Toggle de modo demonstração -->
+            <div class="demo-toggle">
+                <span>Modo Demonstração:</span>
+                <div class="toggle-switch" id="toggle-demo" role="switch" aria-checked="false"
+                    aria-label="Ativar modo demonstração" tabindex="0"></div>
+                <span id="demo-label">OFF</span>
+            </div>
+        </section>
+
+        <!-- Indicador de carregamento -->
+        <div class="loading" id="loading-indicator" style="display: none;">
+            <div class="loading-text">SCANNING...</div>
+            <div class="loading-bar"></div>
+        </div>
+
+        <!-- Área de resultados (preenchida dinamicamente via JS) -->
+        <div id="results-area"></div>
+
+        <!-- Seção educativa -->
+        <section class="info-section">
+            <h3>O que são vazamentos de dados?</h3>
+            <p>
+                Vazamentos de dados (data breaches) ocorrem quando informações confidenciais são acessadas,
+                copiadas ou divulgadas sem autorização. Isso pode incluir:
+            </p>
+            <ul>
+                <li>Endereços de e-mail e nomes de usuário</li>
+                <li>Senhas (às vezes em texto puro)</li>
+                <li>Dados pessoais como nomes, telefones e endereços</li>
+                <li>Informações financeiras</li>
+            </ul>
+            <p>
+                Quando um serviço que você utiliza sofre um vazamento, suas credenciais podem ser
+                expostas e utilizadas por agentes maliciosos para acessar outras contas, especialmente
+                se você reutiliza a mesma senha em vários serviços.
+            </p>
+        </section>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="14"
+                height="14">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Dados fornecidos por <a href="https://xposedornot.com" target="_blank"
+                rel="noopener noreferrer">XposedOrNot</a>.
+            Nenhuma informação pessoal é armazenada.
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/matrix-rain.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+
+</html>
