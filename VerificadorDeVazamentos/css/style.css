@@ -1,0 +1,698 @@
+/* ==========================================================================
+   Verificador de Vazamentos - Estilos com Tema Cyber / Matrix
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Variáveis Globais e Paleta de Cores
+   -------------------------------------------------------------------------- */
+:root {
+    --bg-dark: #0a0a0a;
+    --bg-card: rgba(13, 17, 23, 0.85);
+    --green-neon: #00ff41;
+    --green-dark: #00cc33;
+    --cyan: #00d4ff;
+    --red-alert: #ff0040;
+    --red-glow: rgba(255, 0, 64, 0.3);
+    --text-primary: #e0e0e0;
+    --text-secondary: #8b9dc3;
+    --border-color: rgba(0, 255, 65, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   Reset e Configurações Globais
+   -------------------------------------------------------------------------- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Courier New', 'Fira Code', 'Consolas', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Canvas de fundo animado estilo Matrix Rain */
+canvas#matrix-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    /* Opacidade reduzida para que a chuva não concorra com o conteúdo */
+    opacity: 0.75;
+}
+
+/* --------------------------------------------------------------------------
+   Container Principal
+   -------------------------------------------------------------------------- */
+.main-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Cabeçalho (em caixa para garantir legibilidade sobre o fundo animado)
+   -------------------------------------------------------------------------- */
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    color: var(--green-neon);
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.4), 0 0 20px rgba(0, 255, 65, 0.4), 0 0 40px rgba(0, 255, 65, 0.4);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.header .subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+    line-height: 1.6;
+}
+
+.header .cyber-line {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green-neon), transparent);
+    margin: 1rem auto;
+    width: 60%;
+    animation: pulse-line 2s ease-in-out infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Seção de Busca e Varredura
+   -------------------------------------------------------------------------- */
+.search-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* --------------------------------------------------------------------------
+   Grupo de Entrada (Input e Botão)
+   -------------------------------------------------------------------------- */
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+#email-input {
+    flex: 1;
+    padding: 1rem 1.25rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--green-neon);
+    font-family: inherit;
+    font-size: 1.1rem;
+    outline: none;
+    transition: all 0.3s;
+}
+
+#email-input:focus {
+    border-color: var(--green-neon);
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+}
+
+#email-input::placeholder {
+    color: rgba(0, 255, 65, 0.3);
+}
+
+#email-input.invalid {
+    border-color: var(--red-alert);
+    box-shadow: 0 0 15px var(--red-glow);
+}
+
+#email-input.valid {
+    border-color: var(--green-neon);
+}
+
+/* --------------------------------------------------------------------------
+   Botões de Ação
+   -------------------------------------------------------------------------- */
+.btn-scan {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.2), rgba(0, 255, 65, 0.1));
+    border: 2px solid var(--green-neon);
+    border-radius: 8px;
+    color: var(--green-neon);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-scan:hover {
+    background: rgba(0, 255, 65, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+    transform: translateY(-1px);
+}
+
+.btn-scan:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-scan:active {
+    transform: translateY(1px);
+}
+
+/* --------------------------------------------------------------------------
+   Alternador de Modo Demonstração (Demo Toggle)
+   -------------------------------------------------------------------------- */
+.demo-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.toggle-switch {
+    width: 44px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s, border-color 0.3s;
+    border: 1px solid var(--border-color);
+}
+
+.toggle-switch::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    top: 2px;
+    left: 2px;
+    transition: all 0.3s;
+}
+
+.toggle-switch.active {
+    background: rgba(0, 255, 65, 0.3);
+    border-color: var(--green-neon);
+}
+
+.toggle-switch.active::after {
+    transform: translateX(20px);
+    background: var(--green-neon);
+}
+
+/* --------------------------------------------------------------------------
+   Indicador de Carregamento
+   -------------------------------------------------------------------------- */
+.loading {
+    text-align: center;
+    padding: 3rem;
+    color: var(--green-neon);
+}
+
+.loading-text {
+    font-size: 1.3rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    animation: blink-text 1s step-end infinite;
+}
+
+.loading-bar {
+    width: 200px;
+    height: 4px;
+    background: rgba(0, 255, 65, 0.1);
+    border-radius: 2px;
+    margin: 1rem auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.loading-bar::after {
+    content: '';
+    position: absolute;
+    width: 40%;
+    height: 100%;
+    background: var(--green-neon);
+    border-radius: 2px;
+    animation: loading-slide 1.5s ease-in-out infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Seção de Resultados
+   -------------------------------------------------------------------------- */
+.results-section {
+    margin-top: 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Cartão de Sumário
+   -------------------------------------------------------------------------- */
+.summary-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.summary-card.safe {
+    border-color: var(--green-neon);
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+}
+
+.summary-card.breached {
+    border-color: var(--red-alert);
+    box-shadow: 0 0 20px var(--red-glow);
+}
+
+.summary-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.summary-title .icon {
+    font-size: 2rem;
+}
+
+.summary-title h2 {
+    font-size: 1.3rem;
+    color: var(--text-primary);
+}
+
+.summary-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--green-neon);
+    display: block;
+}
+
+.stat-value.danger {
+    color: var(--red-alert);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.25rem;
+}
+
+/* --------------------------------------------------------------------------
+   Cartões de Vazamento (Breach Cards)
+   -------------------------------------------------------------------------- */
+.breach-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 0, 64, 0.3);
+    border-left: 4px solid var(--red-alert);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s;
+    animation: card-appear 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.breach-card:hover {
+    border-color: rgba(255, 0, 64, 0.6);
+    box-shadow: 0 0 15px var(--red-glow);
+    transform: translateX(4px);
+}
+
+.breach-card .breach-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.breach-card .breach-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--cyan);
+}
+
+.breach-card .breach-date {
+    color: var(--red-alert);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.breach-card .breach-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.breach-card .breach-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.breach-card .data-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.breach-card .data-tag {
+    padding: 3px 10px;
+    background: rgba(255, 0, 64, 0.15);
+    border: 1px solid rgba(255, 0, 64, 0.3);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: #fca5a5;
+}
+
+/* Atrasos escalonados para animação de entrada dos cartões */
+.breach-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.breach-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.breach-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.breach-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.breach-card:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.breach-card:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+.breach-card:nth-child(7) {
+    animation-delay: 0.7s;
+}
+
+.breach-card:nth-child(8) {
+    animation-delay: 0.8s;
+}
+
+.breach-card:nth-child(9) {
+    animation-delay: 0.9s;
+}
+
+.breach-card:nth-child(10) {
+    animation-delay: 1s;
+}
+
+/* --------------------------------------------------------------------------
+   Resultado Seguro (Safe Result)
+   -------------------------------------------------------------------------- */
+.safe-result {
+    text-align: center;
+    padding: 2rem;
+}
+
+.safe-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: pulse-icon 2s ease-in-out infinite;
+}
+
+.safe-text {
+    font-size: 1.2rem;
+    color: var(--green-neon);
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   Seção Informativa / Educativa
+   -------------------------------------------------------------------------- */
+.info-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 2rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.info-section h3 {
+    color: var(--cyan);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.info-section p,
+.info-section li {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.info-section ul {
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Isenção de Responsabilidade (Disclaimer) — em caixa para legibilidade
+   -------------------------------------------------------------------------- */
+.disclaimer {
+    text-align: center;
+    margin-top: 2rem;
+    padding: 1rem 1.25rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.disclaimer a {
+    color: var(--cyan);
+    text-decoration: none;
+}
+
+.disclaimer a:hover {
+    text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   Efeito Glitch
+   -------------------------------------------------------------------------- */
+.glitch {
+    animation: glitch 0.3s linear;
+    position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   Animações (@keyframes)
+   -------------------------------------------------------------------------- */
+
+@keyframes pulse-line {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes blink-text {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes loading-slide {
+    0% {
+        left: -40%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes card-appear {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse-icon {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+    }
+
+    20% {
+        transform: translate(-3px, 3px);
+    }
+
+    40% {
+        transform: translate(3px, -3px);
+    }
+
+    60% {
+        transform: translate(-2px, -2px);
+    }
+
+    80% {
+        transform: translate(2px, 2px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 5px rgba(0, 255, 65, 0.1);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Responsividade e Adaptações Mobile
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px) {
+    .main-content {
+        padding: 1rem;
+    }
+
+    .header h1 {
+        font-size: 1.6rem;
+        letter-spacing: 1px;
+    }
+
+    .input-group {
+        flex-direction: column;
+    }
+
+    .btn-scan {
+        width: 100%;
+    }
+
+    .summary-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .breach-card .breach-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 400px) {
+    .summary-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 1.3rem;
+    }
+}
