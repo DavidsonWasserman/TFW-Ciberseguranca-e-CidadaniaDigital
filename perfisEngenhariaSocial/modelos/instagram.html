@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Troque o título na cópia de cada perfil. -->
+  <title>[Usuário] • Instagram simulado</title>
+
+  <link rel="stylesheet" href="../css/estilos.css">
+  <script src="../js/interface.js" defer></script>
+</head>
+
+<body class="instagram-page">
+  <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+
+  <!-- MENU LATERAL -->
+  <aside class="ig-sidebar">
+    <a class="ig-wordmark" href="../index.html">Instagram</a>
+
+    <nav class="ig-navigation" aria-label="Navegação principal">
+      <a class="side-link" href="../index.html">
+        <span data-icon="home"></span>
+        <span class="nav-label">Página inicial</span>
+      </a>
+
+      <button class="side-link" type="button" data-demo>
+        <span data-icon="search"></span>
+        <span class="nav-label">Pesquisa</span>
+      </button>
+
+      <button class="side-link" type="button" data-demo>
+        <span data-icon="compass"></span>
+        <span class="nav-label">Explorar</span>
+      </button>
+
+      <button class="side-link" type="button" data-demo>
+        <span data-icon="video"></span>
+        <span class="nav-label">Reels</span>
+      </button>
+
+      <button class="side-link" type="button" data-demo>
+        <span data-icon="message"></span>
+        <span class="nav-label">Mensagens</span>
+      </button>
+
+      <button class="side-link" type="button" data-demo>
+        <span data-icon="heart"></span>
+        <span class="nav-label">Notificações</span>
+      </button>
+
+      <button class="side-link" type="button" data-demo>
+        <span data-icon="plus"></span>
+        <span class="nav-label">Criar</span>
+      </button>
+
+      <a class="side-link active" href="#main-content" aria-current="page">
+        <span class="mini-avatar placeholder-avatar"></span>
+        <span class="nav-label">Perfil</span>
+      </a>
+    </nav>
+
+    <div class="ig-sidebar-bottom">
+      <button class="side-link" type="button" data-demo>
+        <span data-icon="menu"></span>
+        <span class="nav-label">Mais</span>
+      </button>
+
+      <span class="sidebar-note">AMBIENTE SIMULADO</span>
+    </div>
+  </aside>
+
+  <!-- CONTEÚDO DO PERFIL -->
+  <main id="main-content" class="ig-main">
+    <div class="ig-content">
+
+      <div class="simulation-strip">
+        <span>Perfil simulado</span>
+        <a href="../index.html">Trocar de perfil</a>
+      </div>
+
+      <header class="ig-profile-header">
+        <div class="ig-avatar-column">
+          <div class="ig-avatar-ring">
+            <div
+              class="ig-avatar placeholder-avatar"
+              role="img"
+              aria-label="Espaço para a foto do perfil"
+            >
+              <span data-icon="user"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ig-profile-information">
+          <div class="ig-profile-top">
+            <h1>[nome_de_usuario]</h1>
+
+            <div class="ig-profile-actions">
+              <button
+                class="button button-blue button-small"
+                type="button"
+                data-follow
+                aria-pressed="false"
+              >
+                Seguir
+              </button>
+
+              <button
+                class="button button-soft button-small"
+                type="button"
+                data-demo
+              >
+                Enviar mensagem
+              </button>
+
+              <button
+                class="icon-button"
+                type="button"
+                aria-label="Mais opções"
+                data-demo
+              >
+                <span data-icon="more"></span>
+              </button>
+            </div>
+          </div>
+
+          <ul class="ig-statistics">
+            <li><strong>[0]</strong> publicações</li>
+            <li><strong>[0]</strong> seguidores</li>
+            <li><strong>[0]</strong> seguindo</li>
+          </ul>
+
+          <div class="ig-biography">
+            <h2>[Nome do perfil]</h2>
+            <p class="muted">[Categoria do perfil]</p>
+            <p>[Primeira linha da biografia]</p>
+            <p>[Segunda linha da biografia]</p>
+
+            <!-- Substitua por um link real, se houver. -->
+            <span class="ig-bio-link">[Link ou informação complementar]</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- DESTAQUES -->
+      <section class="ig-highlights" aria-label="Destaques">
+        <button class="highlight" type="button" data-demo>
+          <span class="highlight-ring">
+            <span class="highlight-cover">
+              <span data-icon="image"></span>
+            </span>
+          </span>
+          <span>[Destaque]</span>
+        </button>
+
+        <button class="highlight" type="button" data-demo>
+          <span class="highlight-ring">
+            <span class="highlight-cover">
+              <span data-icon="image"></span>
+            </span>
+          </span>
+          <span>[Destaque]</span>
+        </button>
+
+        <button class="highlight" type="button" data-demo>
+          <span class="highlight-ring">
+            <span class="highlight-cover">
+              <span data-icon="image"></span>
+            </span>
+          </span>
+          <span>[Destaque]</span>
+        </button>
+      </section>
+
+      <!-- ABAS E PUBLICAÇÕES -->
+      <section class="ig-publications" data-tabs>
+        <div class="ig-tabs" role="tablist" aria-label="Conteúdo do perfil">
+          <button
+            id="ig-tab-posts"
+            class="ig-tab"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="ig-posts"
+          >
+            <span data-icon="grid"></span>
+            PUBLICAÇÕES
+          </button>
+
+          <button
+            id="ig-tab-reels"
+            class="ig-tab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="ig-reels"
+            tabindex="-1"
+          >
+            <span data-icon="video"></span>
+            REELS
+          </button>
+
+          <button
+            id="ig-tab-tagged"
+            class="ig-tab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="ig-tagged"
+            tabindex="-1"
+          >
+            <span data-icon="user"></span>
+            MARCADOS
+          </button>
+        </div>
+
+        <div
+          id="ig-posts"
+          role="tabpanel"
+          aria-labelledby="ig-tab-posts"
+        >
+          <div class="ig-grid">
+            <!--
+              Estes são espaços de composição.
+              Substitua cada bloco por uma imagem de publicação.
+            -->
+
+            <div class="ig-post-placeholder">
+              <span data-icon="image"></span>
+              <span>Publicação 01</span>
+            </div>
+
+            <div class="ig-post-placeholder">
+              <span data-icon="image"></span>
+              <span>Publicação 02</span>
+            </div>
+
+            <div class="ig-post-placeholder">
+              <span data-icon="image"></span>
+              <span>Publicação 03</span>
+            </div>
+
+            <div class="ig-post-placeholder">
+              <span data-icon="image"></span>
+              <span>Publicação 04</span>
+            </div>
+
+            <div class="ig-post-placeholder">
+              <span data-icon="image"></span>
+              <span>Publicação 05</span>
+            </div>
+
+            <div class="ig-post-placeholder">
+              <span data-icon="image"></span>
+              <span>Publicação 06</span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          id="ig-reels"
+          class="network-empty"
+          role="tabpanel"
+          aria-labelledby="ig-tab-reels"
+          hidden
+        >
+          <span data-icon="video"></span>
+          <h2>Espaço para reels</h2>
+          <p>Adicione os vídeos deste perfil posteriormente.</p>
+        </div>
+
+        <div
+          id="ig-tagged"
+          class="network-empty"
+          role="tabpanel"
+          aria-labelledby="ig-tab-tagged"
+          hidden
+        >
+          <span data-icon="user"></span>
+          <h2>Publicações marcadas</h2>
+          <p>Adicione este conteúdo quando preparar o perfil.</p>
+        </div>
+      </section>
+
+      <footer class="ig-footer">
+        Interface para simulação local · Sem vínculo com o Instagram
+      </footer>
+    </div>
+  </main>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

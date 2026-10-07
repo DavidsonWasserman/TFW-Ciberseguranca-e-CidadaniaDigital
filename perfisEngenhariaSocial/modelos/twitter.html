@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[Nome] (@usuario) / Twitter simulado</title>
+
+  <link rel="stylesheet" href="../css/estilos.css">
+  <script src="../js/interface.js" defer></script>
+</head>
+
+<body class="twitter-page">
+  <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+
+  <div class="tw-layout">
+
+    <!-- MENU LATERAL -->
+    <aside class="tw-sidebar">
+      <a class="tw-wordmark" href="../index.html" aria-label="Página inicial">
+        <span data-icon="message"></span>
+        <span class="nav-label">Twitter</span>
+      </a>
+
+      <nav class="tw-navigation" aria-label="Navegação principal">
+        <a class="tw-nav-link" href="../index.html">
+          <span data-icon="home"></span>
+          <span class="nav-label">Página inicial</span>
+        </a>
+
+        <button class="tw-nav-link" type="button" data-demo>
+          <span data-icon="search"></span>
+          <span class="nav-label">Explorar</span>
+        </button>
+
+        <button class="tw-nav-link" type="button" data-demo>
+          <span data-icon="bell"></span>
+          <span class="nav-label">Notificações</span>
+        </button>
+
+        <button class="tw-nav-link" type="button" data-demo>
+          <span data-icon="mail"></span>
+          <span class="nav-label">Mensagens</span>
+        </button>
+
+        <button class="tw-nav-link" type="button" data-demo>
+          <span data-icon="bookmark"></span>
+          <span class="nav-label">Itens salvos</span>
+        </button>
+
+        <button class="tw-nav-link" type="button" data-demo>
+          <span data-icon="users"></span>
+          <span class="nav-label">Comunidades</span>
+        </button>
+
+        <a class="tw-nav-link active" href="#main-content" aria-current="page">
+          <span data-icon="user"></span>
+          <span class="nav-label">Perfil</span>
+        </a>
+
+        <button class="tw-nav-link" type="button" data-demo>
+          <span data-icon="more"></span>
+          <span class="nav-label">Mais</span>
+        </button>
+      </nav>
+
+      <button class="tw-publish" type="button" data-demo>
+        <span data-icon="plus"></span>
+        <span class="nav-label">Publicar</span>
+      </button>
+
+      <div class="tw-sidebar-note">
+        Ambiente simulado
+      </div>
+    </aside>
+
+    <!-- COLUNA CENTRAL -->
+    <main id="main-content" class="tw-main">
+      <header class="tw-topbar">
+        <a
+          class="icon-button"
+          href="../index.html"
+          aria-label="Voltar para a seleção de perfis"
+        >
+          <span data-icon="arrow-left"></span>
+        </a>
+
+        <div>
+          <h1>[Nome do perfil]</h1>
+          <p>[0] publicações</p>
+        </div>
+      </header>
+
+      <!-- CAPA -->
+      <div class="tw-cover">
+        <span data-icon="image"></span>
+        <span>Imagem de capa</span>
+      </div>
+
+      <!-- INFORMAÇÕES -->
+      <section class="tw-profile" aria-label="Informações do perfil">
+        <div class="tw-profile-toolbar">
+          <div
+            class="tw-avatar placeholder-avatar"
+            role="img"
+            aria-label="Espaço para a foto do perfil"
+          >
+            <span data-icon="user"></span>
+          </div>
+
+          <div class="tw-profile-actions">
+            <button
+              class="icon-button bordered"
+              type="button"
+              aria-label="Mais opções"
+              data-demo
+            >
+              <span data-icon="more"></span>
+            </button>
+
+            <button
+              class="icon-button bordered"
+              type="button"
+              aria-label="Enviar mensagem"
+              data-demo
+            >
+              <span data-icon="mail"></span>
+            </button>
+
+            <button
+              class="button button-dark button-pill"
+              type="button"
+              data-follow
+              aria-pressed="false"
+            >
+              Seguir
+            </button>
+          </div>
+        </div>
+
+        <div class="tw-identity">
+          <h2>[Nome do perfil]</h2>
+          <p class="muted">@[nome_de_usuario]</p>
+        </div>
+
+        <p class="tw-bio">
+          [Escreva aqui a biografia do perfil. Este espaço pode conter
+          uma apresentação, interesses ou outras informações.]
+        </p>
+
+        <div class="tw-metadata">
+          <span>
+            <span data-icon="pin"></span>
+            [Localização]
+          </span>
+
+          <span>
+            <span data-icon="link"></span>
+            [Site]
+          </span>
+
+          <span>
+            <span data-icon="calendar"></span>
+            Ingressou em [mês e ano]
+          </span>
+        </div>
+
+        <div class="tw-statistics">
+          <span><strong>[0]</strong> Seguindo</span>
+          <span><strong>[0]</strong> Seguidores</span>
+        </div>
+
+        <div class="tw-simulation-note">
+          Perfil fictício · Ambiente de simulação
+        </div>
+      </section>
+
+      <!-- ABAS -->
+      <section data-tabs>
+        <div class="tw-tabs" role="tablist" aria-label="Conteúdo do perfil">
+          <button
+            id="tw-tab-posts"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="tw-posts"
+          >
+            <span>Publicações</span>
+          </button>
+
+          <button
+            id="tw-tab-replies"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="tw-replies"
+            tabindex="-1"
+          >
+            <span>Respostas</span>
+          </button>
+
+          <button
+            id="tw-tab-media"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="tw-media"
+            tabindex="-1"
+          >
+            <span>Mídia</span>
+          </button>
+        </div>
+
+        <div
+          id="tw-posts"
+          role="tabpanel"
+          aria-labelledby="tw-tab-posts"
+        >
+          <!-- BLOCO GENÉRICO PARA COPIAR E PREENCHER -->
+          <article class="tw-post">
+            <div class="tw-post-avatar placeholder-avatar" aria-hidden="true">
+              <span data-icon="user"></span>
+            </div>
+
+            <div class="tw-post-body">
+              <div class="tw-post-heading">
+                <div class="tw-post-author">
+                  <strong>[Nome]</strong>
+                  <span>@[usuario]</span>
+                  <span>· [data]</span>
+                </div>
+
+                <button
+                  class="icon-button"
+                  type="button"
+                  aria-label="Opções da publicação"
+                  data-demo
+                >
+                  <span data-icon="more"></span>
+                </button>
+              </div>
+
+              <p class="tw-post-text">
+                [Texto da publicação. Substitua este conteúdo quando
+                preencher as informações do perfil.]
+              </p>
+
+              <!-- Remova este bloco se a publicação não tiver imagem. -->
+              <div class="tw-post-media-placeholder">
+                <span data-icon="image"></span>
+                <span>Imagem opcional da publicação</span>
+              </div>
+
+              <div class="tw-post-actions">
+                <button type="button" aria-label="Responder" data-demo>
+                  <span data-icon="message"></span>
+                  <span>0</span>
+                </button>
+
+                <button type="button" aria-label="Repostar" data-demo>
+                  <span data-icon="repeat"></span>
+                  <span>0</span>
+                </button>
+
+                <button
+                  type="button"
+                  aria-label="Curtir"
+                  aria-pressed="false"
+                  data-like
+                >
+                  <span data-icon="heart"></span>
+                  <span data-like-count>0</span>
+                </button>
+
+                <button
+                  type="button"
+                  aria-label="Visualizações"
+                  data-demo
+                >
+                  <span data-icon="chart"></span>
+                  <span>0</span>
+                </button>
+
+                <button
+                  type="button"
+                  aria-label="Salvar publicação"
+                  data-demo
+                >
+                  <span data-icon="bookmark"></span>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div
+          id="tw-replies"
+          class="network-empty"
+          role="tabpanel"
+          aria-labelledby="tw-tab-replies"
+          hidden
+        >
+          <h2>Espaço para respostas</h2>
+          <p>Adicione as respostas do perfil posteriormente.</p>
+        </div>
+
+        <div
+          id="tw-media"
+          class="network-empty"
+          role="tabpanel"
+          aria-labelledby="tw-tab-media"
+          hidden
+        >
+          <span data-icon="image"></span>
+          <h2>Espaço para mídia</h2>
+          <p>Adicione as imagens e os vídeos deste perfil.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- COLUNA DIREITA -->
+    <aside class="tw-right">
+      <button class="tw-search" type="button" data-demo>
+        <span data-icon="search"></span>
+        Buscar
+      </button>
+
+      <section class="tw-widget">
+        <h2>Talvez você curta</h2>
+
+        <div class="tw-widget-placeholder">
+          <span data-icon="users"></span>
+          <p>Espaço reservado para sugestões de perfis.</p>
+        </div>
+      </section>
+
+      <section class="tw-widget">
+        <h2>O que está acontecendo</h2>
+
+        <div class="tw-trend">
+          <span>[Categoria] · Assunto</span>
+          <strong>[Título do assunto]</strong>
+          <span>[Quantidade] publicações</span>
+        </div>
+
+        <div class="tw-trend">
+          <span>[Categoria] · Assunto</span>
+          <strong>[Título do assunto]</strong>
+          <span>[Quantidade] publicações</span>
+        </div>
+
+        <div class="tw-trend">
+          <span>[Categoria] · Assunto</span>
+          <strong>[Título do assunto]</strong>
+          <span>[Quantidade] publicações</span>
+        </div>
+      </section>
+
+      <footer class="tw-footer">
+        Interface para simulação local.
+        Sem vínculo com o Twitter/X.
+      </footer>
+    </aside>
+
+  </div>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

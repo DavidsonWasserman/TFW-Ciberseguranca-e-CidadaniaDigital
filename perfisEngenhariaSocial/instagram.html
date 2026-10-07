@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Instagram simulado</title>
+  <link rel="stylesheet" href="css/estilo.css">
+  <script src="js/dados.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body data-pagina="instagram">
+  <header class="cabecalho">
+    <a href="index.html">← Todos os perfis</a>
+    <span>Instagram · Ambiente simulado</span>
+  </header>
+
+  <main class="container">
+    <section id="perfil" class="perfil" aria-label="Perfil"></section>
+
+    <nav class="navegacao" aria-label="Redes do personagem">
+      <a id="outra-rede" href="index.html">Ver no Twitter</a>
+    </nav>
+
+    <section aria-labelledby="titulo-publicacoes">
+      <h2 id="titulo-publicacoes">Publicações</h2>
+      <div id="publicacoes" class="grade-fotos"></div>
+    </section>
+  </main>
+</body>
+</html>
