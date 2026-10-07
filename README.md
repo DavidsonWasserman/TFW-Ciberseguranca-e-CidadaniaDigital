@@ -20,7 +20,8 @@ A experiência será organizada, inicialmente, em três estações:
 
 1. **Rastros Digitais** — identificação de informações que podem ser descobertas a partir da presença digital de uma personagem fictícia;
 2. **Segurança de Senhas** — compreensão de práticas relacionadas à criação e proteção de senhas;
-3. **Defesa Digital** — apresentação de medidas e práticas para aumentar a segurança no ambiente digital.
+3. **Defesa Digital** — apresentação de medidas e práticas para aumentar a segurança no ambiente digital;
+4. **Verificador de Vazamentos** — verificação de e-mails em bases de dados de vazamentos públicos, com interface estilo Matrix/Cyber e integração com a API XposedOrNot.
 
 ## Status
 
