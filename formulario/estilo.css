@@ -140,6 +140,14 @@ legend .n{display:block;font:700 .78rem var(--mono);color:var(--verde);letter-sp
 .fim p{color:var(--texto)}
 .fim .teste{margin-top:1rem;font:.85rem var(--mono);color:var(--erro)}
 
+/* Depois do envio: só o cartão, no centro da tela (celular e desktop) */
+.enviado .layout{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100vh;min-height:100dvh;padding:1.25rem 1rem;
+}
+.enviado main{flex:0 1 auto;display:block;width:100%;max-width:460px}
+.enviado .fim{margin:0;box-shadow:0 0 40px rgba(45,255,122,.18)}
+
 /* ============================================================
    CELULAR — uma pergunta por vez (slides)
    ============================================================ */

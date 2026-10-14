@@ -202,8 +202,8 @@ form.addEventListener("submit", async e => {
       document.getElementById("teste").hidden = false;
     }
     form.hidden = true;
-    cabeca.hidden = false;
-    document.querySelectorAll(".topo,.lateral-prog").forEach(el => el.hidden = true);
+    document.body.classList.add("enviado"); // só o cartão de confirmação, centralizado
+    document.querySelectorAll(".topo,.intro").forEach(el => el.hidden = true);
     document.getElementById("fim").hidden = false;
     scrollTo(0, 0);
   } catch (err) {
