@@ -1,0 +1,234 @@
+/* ============================================================
+   Feedback | Segurança Digital — estilo cyberpunk
+   Mobile primeiro: base = celular (slides). A partir de 900px = desktop.
+   ============================================================ */
+
+:root{
+  /* Mude aqui a cor do botão */
+  --botao:#ff2e9a; --botao-texto:#12020b;
+
+  --verde:#2dff7a; --ciano:#00e5ff; --fundo:#040706;
+  --painel:rgba(4,10,7,.88); --texto:#e2fbec; --suave:#93bca4; --erro:#ff5a76;
+  --linha:rgba(45,255,122,.28);
+  --sans:"Chakra Petch",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+
+*{box-sizing:border-box;margin:0}
+[hidden]{display:none!important}
+html{background:var(--fundo);-webkit-text-size-adjust:100%}
+body{
+  min-height:100vh;min-height:100dvh;color:var(--texto);font:400 1rem/1.5 var(--sans);
+  padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* ---------- Fundo em GIF (camada fixa: funciona no iOS) ---------- */
+.bg{position:fixed;inset:0;z-index:-1;background:var(--fundo) url("fundo.gif") center/cover no-repeat}
+.bg::after{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 20% 30%,rgba(4,7,6,.15),rgba(4,7,6,.7) 75%),
+    linear-gradient(180deg,rgba(4,7,6,.5),rgba(4,7,6,.15) 40%,rgba(4,7,6,.6));
+}
+
+/* ---------- Progresso ---------- */
+.barra{flex:1;height:4px;background:rgba(45,255,122,.15)}
+.barra i{display:block;height:100%;width:0;background:var(--verde);box-shadow:0 0 8px var(--verde);transition:width .3s}
+
+/* barra fixa no topo: só celular */
+.topo{
+  position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:.8rem;
+  padding:calc(.65rem + env(safe-area-inset-top)) 1rem .65rem;
+  background:rgba(4,7,6,.93);border-bottom:1px solid var(--linha);
+  font:700 .8rem var(--mono);color:var(--verde);
+}
+.lateral-prog{display:none}
+
+/* ---------- Estrutura ---------- */
+.layout{max-width:680px;margin:0 auto;padding:1.25rem 1rem 3rem}
+
+.intro{margin:.25rem 0 1.25rem}
+.etiqueta{font:700 .72rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ciano);margin-bottom:.6rem}
+h1{
+  font:700 clamp(1.75rem,7.6vw,2.6rem)/1.08 var(--sans);margin-bottom:.9rem;
+  text-shadow:1.5px 0 rgba(0,229,255,.75),-1.5px 0 rgba(255,46,154,.75);
+  animation:glitch .9s steps(1) 1;
+}
+.lead{
+  font:400 .88rem/1.55 var(--mono);color:var(--suave);
+  background:rgba(4,7,6,.72);padding:.65rem .85rem;border-left:3px solid var(--ciano);
+}
+.dica{display:none}
+.mobile .dica{display:inline;color:var(--verde)}
+
+@keyframes glitch{
+  0%{transform:translate(0)}12%{transform:translate(-4px,1px)}24%{transform:translate(3px,-1px)}
+  36%{transform:translate(0)}62%{transform:translate(2px,0)}74%{transform:translate(0)}
+}
+
+/* ---------- Perguntas ---------- */
+fieldset{border:0;padding:0;min-width:0}
+.q{
+  position:relative;background:var(--painel);border:1px solid var(--linha);border-left:3px solid var(--verde);
+  padding:1.1rem 1rem 1rem;margin-bottom:1rem;
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+}
+/* cantoneira ciano no canto superior direito */
+.q::before{
+  content:"";position:absolute;top:-1px;right:-1px;width:18px;height:18px;
+  border-top:2px solid var(--ciano);border-right:2px solid var(--ciano);pointer-events:none;
+}
+.q.err{border-color:var(--erro);box-shadow:0 0 0 1px var(--erro)}
+.q:focus{outline:none}
+
+legend{display:block;width:100%;float:left;font:600 1.08rem/1.35 var(--sans);margin-bottom:.9rem}
+legend+*{clear:both}
+legend .n{display:block;font:700 .78rem var(--mono);color:var(--verde);letter-spacing:.12em;margin-bottom:.3rem}
+.msg{display:none;color:var(--erro);font:.8rem var(--mono);margin-top:.7rem}
+.q.err .msg{display:block}
+
+/* ---------- Opções ---------- */
+.opts{display:grid;gap:.55rem}
+.opt{position:relative;display:block;-webkit-tap-highlight-color:transparent}
+.opt input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.box{
+  display:flex;align-items:center;gap:.8rem;min-height:50px;padding:.65rem .9rem;
+  border:1px solid var(--linha);background:rgba(0,0,0,.42);
+  transition:background .15s,border-color .15s,box-shadow .15s;
+}
+.mark{flex:none;width:12px;height:12px;border:2px solid var(--verde);transform:rotate(45deg);transition:background .15s}
+.opt input:checked+.box{border-color:var(--verde);background:rgba(45,255,122,.15);box-shadow:0 0 14px rgba(45,255,122,.3)}
+.opt input:checked+.box .mark{background:var(--verde);box-shadow:0 0 8px var(--verde)}
+.opt input:focus-visible+.box{outline:2px solid var(--ciano);outline-offset:2px}
+@media(hover:hover){.opt:hover .box{border-color:var(--verde)}}
+
+/* escala 0–10 */
+.scale{display:grid;grid-template-columns:repeat(6,1fr);gap:.45rem}
+.scale .box{justify-content:center;padding:.75rem 0;font:700 1.05rem var(--mono)}
+.ends{display:flex;justify-content:space-between;margin-top:.7rem;font:.78rem var(--mono);color:var(--suave)}
+
+/* ---------- Botões ---------- */
+.aviso{min-height:1.3rem;margin:.2rem 0 .5rem;text-align:center;color:var(--erro);font:.85rem var(--mono)}
+.nav{display:flex;gap:.6rem}
+.send{
+  display:block;flex:1;width:100%;min-height:56px;border:0;cursor:pointer;
+  background:var(--botao);color:var(--botao-texto);font:700 1.05rem var(--sans);letter-spacing:.05em;text-transform:uppercase;
+  box-shadow:0 0 20px color-mix(in srgb,var(--botao) 55%,transparent);
+  transition:filter .15s,transform .1s;
+}
+.send:hover{filter:brightness(1.12)}
+.send:active{transform:translateY(1px)}
+.send:disabled{opacity:.6;cursor:wait}
+.volta,.prox{
+  display:none;min-height:56px;padding:0 1.1rem;border:1px solid var(--verde);
+  background:rgba(4,7,6,.9);color:var(--verde);font:700 .95rem var(--sans);cursor:pointer;
+}
+.prox{flex:1}
+.prox:disabled{opacity:.4;cursor:default}
+.send:focus-visible,.volta:focus-visible,.prox:focus-visible{outline:2px solid var(--ciano);outline-offset:3px}
+
+/* ---------- Tela final ---------- */
+.fim{
+  text-align:center;background:var(--painel);border:1px solid var(--linha);border-top:3px solid var(--verde);
+  padding:2.2rem 1.25rem;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+}
+.fim .ok{
+  display:grid;place-items:center;width:64px;height:64px;margin:0 auto 1rem;
+  border:2px solid var(--verde);color:var(--verde);font:700 2rem var(--mono);
+  box-shadow:0 0 20px rgba(45,255,122,.4);transform:rotate(45deg);
+}
+.fim .ok span{transform:rotate(-45deg)}
+.fim h2{font:700 1.6rem var(--sans);color:var(--verde);margin-bottom:.5rem}
+.fim p{color:var(--texto)}
+.fim .teste{margin-top:1rem;font:.85rem var(--mono);color:var(--erro)}
+
+/* ============================================================
+   CELULAR — uma pergunta por vez (slides)
+   ============================================================ */
+.slides .trilho{display:grid;overflow-x:clip}
+.slides .q{
+  grid-area:1/1;align-self:start;
+  transition:transform .4s cubic-bezier(.22,.8,.2,1),opacity .35s;
+}
+.slides .q:not(.ativo){
+  visibility:hidden;opacity:0;pointer-events:none;
+  transition:transform .4s cubic-bezier(.22,.8,.2,1),opacity .3s,visibility 0s .4s;
+}
+.slides .q.antes{transform:translateX(-105%)}
+.slides .q.depois{transform:translateX(105%)}
+.slides .nav{
+  position:sticky;bottom:0;z-index:4;margin:0 -1rem;
+  padding:.8rem 1rem calc(.8rem + env(safe-area-inset-bottom));
+  background:linear-gradient(0deg,rgba(4,7,6,.97) 65%,rgba(4,7,6,0));
+}
+.slides .volta,.slides .prox{display:block}
+.slides .send{display:none}
+.slides.ultima .send{display:block}
+.slides.ultima .prox{display:none}
+
+/* celular pequeno */
+@media(max-width:360px){
+  .layout{padding-inline:.75rem}
+  .box{padding-inline:.7rem}
+  .slides .nav{margin-inline:-.75rem;padding-inline:.75rem} /* acompanha o padding do .layout */
+}
+
+/* celular: título mais compacto para as opções aparecerem sem rolar tanto */
+@media(max-width:599px){
+  .intro{margin-bottom:1rem}
+  h1{font-size:clamp(1.5rem,6.6vw,2rem);margin-bottom:.65rem}
+  .lead{font-size:.82rem;padding:.55rem .75rem}
+  .q{padding:1rem .9rem .9rem}
+  legend{font-size:1.02rem;margin-bottom:.75rem}
+  .box{min-height:48px;padding:.55rem .8rem}
+  .opts{gap:.45rem}
+}
+
+/* celular deitado / tablet pequeno: escala 0–10 numa linha só */
+@media(min-width:600px){
+  .scale{grid-template-columns:repeat(11,1fr)}
+}
+
+/* ============================================================
+   DESKTOP — duas colunas: título fixo à esquerda, perguntas à direita
+   ============================================================ */
+@media(min-width:900px){
+  .topo{display:none}
+
+  .layout{
+    display:grid;grid-template-columns:minmax(300px,380px) minmax(0,1fr);
+    gap:clamp(2rem,5vw,4.5rem);align-items:start;
+    max-width:1180px;padding:3.5rem 2.5rem 5rem;
+  }
+
+  .intro{position:sticky;top:3.5rem;margin:0}
+  .etiqueta{font-size:.78rem}
+  h1{font-size:clamp(2.2rem,3.4vw,3rem)}
+  .lead{font-size:.92rem;padding:.8rem 1rem}
+
+  .lateral-prog{display:block;margin-top:1.75rem}
+  .lateral-prog .contador{display:block;font:700 2.6rem/1 var(--mono);color:var(--verde);text-shadow:0 0 14px rgba(45,255,122,.5)}
+  .lateral-prog .contador small{font-size:1rem;color:var(--suave);text-shadow:none}
+  .lateral-prog .barra{margin:.8rem 0 .5rem;height:5px}
+  .lateral-prog p{font:.78rem var(--mono);color:var(--suave);letter-spacing:.08em;text-transform:uppercase}
+
+  .q{padding:1.5rem 1.6rem 1.4rem;margin-bottom:1.25rem}
+  legend{font-size:1.2rem}
+  legend .n{display:inline;margin:0 .7rem 0 0;font-size:.85rem}
+  .opts{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .box{min-height:54px}
+  .send{font-size:1.1rem;min-height:60px}
+  .fim{padding:3.2rem 2rem}
+}
+
+/* telas grandes: um pouco mais de respiro */
+@media(min-width:1400px){
+  .layout{max-width:1260px}
+}
+
+/* ---------- Acessibilidade: menos movimento ---------- */
+@media(prefers-reduced-motion:reduce){
+  h1{animation:none}
+  .bg{background-image:none} /* o GIF não pode ser pausado por CSS: some para quem pede menos movimento */
+  *{transition:none!important}
+}
