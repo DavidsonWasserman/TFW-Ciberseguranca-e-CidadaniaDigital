@@ -98,7 +98,6 @@ PERGUNTAS.forEach(([texto, ops], i) => {
 form.insertAdjacentHTML("beforeend",
   '<p class="aviso" id="aviso" role="alert"></p>' +
   '<div class="nav"><button type="button" class="volta" id="volta">Voltar</button>' +
-  '<button type="button" class="prox" id="prox">Próxima</button>' +
   '<button class="send" type="submit" id="btn">Enviar respostas</button></div>');
 
 // Resposta da pergunta n ("" se não respondida ou se a pergunta não existir)
@@ -106,7 +105,6 @@ const resp = n => { const c = form.elements["q" + n]; return c ? c.value : ""; }
 const btn = document.getElementById("btn");
 const aviso = document.getElementById("aviso");
 const volta = document.getElementById("volta");
-const prox = document.getElementById("prox");
 const cabeca = document.querySelector(".intro");
 const paineis = [...trilho.querySelectorAll(".q")]; // só as perguntas, nunca a tela final
 let idx = 0, timer;
@@ -118,7 +116,6 @@ function atualizar() {
   document.querySelectorAll(".topo .contador").forEach(el => el.textContent = v + "/" + total);
   document.querySelectorAll(".lateral-prog .contador").forEach(el => el.innerHTML = v + "<small>/" + total + "</small>");
   document.querySelectorAll(".barra i").forEach(el => el.style.width = pct);
-  prox.disabled = !resp(idx + 1);
 }
 
 function ir(n, foco = true) {
@@ -129,6 +126,7 @@ function ir(n, foco = true) {
     p.classList.toggle("depois", i > idx);
   });
   form.classList.toggle("ultima", idx === total - 1);
+  form.classList.toggle("primeira", idx === 0);
   volta.hidden = idx === 0;
   cabeca.hidden = idx > 0;   // no celular, o título só aparece na primeira pergunta
   aviso.textContent = "";
@@ -143,7 +141,7 @@ function modo() {
   if (mq.matches) ir(idx, false);
   else {
     paineis.forEach(p => p.classList.remove("ativo", "antes", "depois"));
-    form.classList.remove("ultima");
+    form.classList.remove("ultima", "primeira");
     cabeca.hidden = false;
     atualizar();
   }
@@ -165,7 +163,6 @@ form.addEventListener("click", e => {
   }
 });
 volta.addEventListener("click", () => ir(idx - 1));
-prox.addEventListener("click", () => ir(idx + 1));
 
 // Deslizar o dedo: esquerda avança (se já respondeu), direita volta
 let x0 = null, y0 = 0;
