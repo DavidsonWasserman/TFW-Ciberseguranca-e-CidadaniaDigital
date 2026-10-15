@@ -23,5 +23,12 @@ export function verifyPassword(password: string, stored: string): boolean {
 
 export const users = new Map<string, User>();
 
-/* Usuário de demonstração: alunorural / senha123 */
-users.set('alunorural', { username: 'alunorural', passwordHash: hashPassword('senha123') });
+export function resetUsers(): void {
+    users.clear();
+    const demoUser: User = { username: 'alunorural', passwordHash: hashPassword('senha123') };
+    users.set('alunorural', demoUser);
+    users.set('alunorural@ufrrj.br', demoUser);
+    users.set('alunorural@email.com', demoUser);
+}
+
+resetUsers();

@@ -1,0 +1,69 @@
+/* ==========================================================================
+   Design System & Variáveis CSS — Cyberpunk
+   ========================================================================== */
+:root {
+  /* Cores Base */
+  --botao: #0080ff;
+  --botao-texto: #ffffff;
+  --verde: #2dff7a;
+  --ciano: #00e5ff;
+  --fundo: #040706;
+  --painel: rgba(4, 10, 7, 0.88);
+  --texto: #e2fbec;
+  --suave: #93bca4;
+  --erro: #ff5a76;
+  --linha: rgba(45, 255, 122, 0.28);
+  --linha-ciano: rgba(0, 229, 255, 0.35);
+
+  /* Tipografia */
+  --sans: "Chakra Petch", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --font-family: var(--sans);
+  --font-mono: var(--mono);
+
+  /* Mapeamento Semântico para os componentes do MFA */
+  --bg-main: var(--fundo);
+  --bg-card: var(--painel);
+  --bg-card-subtle: rgba(0, 0, 0, 0.45);
+  --bg-input: rgba(0, 0, 0, 0.55);
+  --border-color: var(--linha);
+  --border-focus: var(--ciano);
+
+  --text-primary: var(--texto);
+  --text-secondary: var(--suave);
+  --text-muted: rgba(147, 188, 164, 0.7);
+
+  /* Botão primário com destaque neon azul */
+  --accent-primary: var(--botao);
+  --accent-primary-hover: #1a8cff;
+  --accent-primary-light: rgba(0, 128, 255, 0.2);
+
+  /* Sucesso em Verde Neon */
+  --accent-success: var(--verde);
+  --accent-success-hover: #26e66d;
+  --accent-success-light: rgba(45, 255, 122, 0.18);
+
+  /* Alerta/Erro em Rosa/Vermelho Cyberpunk */
+  --accent-danger: var(--erro);
+  --accent-danger-hover: #ff3a5d;
+  --accent-danger-light: rgba(255, 90, 118, 0.2);
+
+  /* Aviso em Ciano / Âmbar Cyber */
+  --accent-warning: #ffb703;
+  --accent-warning-light: rgba(255, 183, 3, 0.18);
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 0 35px rgba(45, 255, 122, 0.12);
+  --shadow-neon-green: 0 0 14px rgba(45, 255, 122, 0.35);
+  --shadow-neon-cyan: 0 0 14px rgba(0, 229, 255, 0.4);
+  --shadow-neon-blue: 0 0 20px rgba(0, 128, 255, 0.45);
+
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+}
