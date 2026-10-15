@@ -1,0 +1,405 @@
+/* ==========================================================================
+   Componentes Reutilizáveis de Interface — Cyberpunk
+   ========================================================================== */
+
+/* ---------- Formulários e Inputs ---------- */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  font: 700 0.78rem var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto);
+  margin-bottom: 0.45rem;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.875rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--suave);
+  pointer-events: none;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.6rem;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--texto);
+  font-size: 0.95rem;
+  font-family: var(--sans);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--ciano);
+  background-color: rgba(4, 10, 7, 0.98);
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.35);
+}
+
+.form-input::placeholder {
+  color: rgba(147, 188, 164, 0.5);
+  font-family: var(--sans);
+}
+
+.input-toggle-btn {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: var(--suave);
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast);
+}
+
+.input-toggle-btn:hover {
+  color: var(--ciano);
+}
+
+/* ---------- Input Numérico TOTP (6 Dígitos) ---------- */
+.totp-input {
+  text-align: center;
+  font-size: 1.85rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  padding: 0.75rem;
+  font-family: var(--mono);
+  color: var(--verde);
+  text-shadow: 0 0 10px rgba(45, 255, 122, 0.4);
+  background-color: rgba(0, 0, 0, 0.55);
+}
+
+.totp-input:focus {
+  border-color: var(--verde);
+  box-shadow: 0 0 16px rgba(45, 255, 122, 0.45);
+}
+
+/* ---------- Botões ---------- */
+.btn {
+  width: 100%;
+  min-height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font: 700 1rem var(--sans);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: filter var(--transition-fast), transform 0.1s, box-shadow var(--transition-fast);
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Botão Primário (Azul Neon) */
+.btn-primary {
+  background: var(--botao);
+  color: var(--botao-texto);
+  border: none;
+  box-shadow: 0 0 20px color-mix(in srgb, var(--botao) 55%, transparent);
+}
+
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.14);
+  box-shadow: 0 0 25px color-mix(in srgb, var(--botao) 75%, transparent);
+}
+
+/* Botão Secundário (Borda Verde Neon) */
+.btn-secondary {
+  background: rgba(4, 7, 6, 0.9);
+  border: 1px solid var(--verde);
+  color: var(--verde);
+  box-shadow: 0 0 8px rgba(45, 255, 122, 0.15);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(45, 255, 122, 0.15);
+  box-shadow: 0 0 16px rgba(45, 255, 122, 0.35);
+  color: #ffffff;
+}
+
+/* Botão de Perigo / Exclusão */
+.btn-danger {
+  background: rgba(255, 90, 118, 0.15);
+  border: 1px solid var(--erro);
+  color: var(--erro);
+  box-shadow: 0 0 10px rgba(255, 90, 118, 0.2);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--erro);
+  color: #12020b;
+  box-shadow: 0 0 20px rgba(255, 90, 118, 0.5);
+}
+
+.btn-spinner {
+  display: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.btn.loading .btn-spinner {
+  display: inline-block;
+}
+
+.btn.loading .btn-text {
+  opacity: 0.85;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.btn-copy {
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid var(--linha-ciano);
+  color: var(--ciano);
+  cursor: pointer;
+  padding: 0.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.btn-copy:hover {
+  background: rgba(0, 229, 255, 0.22);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.4);
+}
+
+.btn-icon-back {
+  background: rgba(4, 7, 6, 0.9);
+  border: 1px solid var(--linha);
+  color: var(--suave);
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.btn-icon-back:hover {
+  border-color: var(--ciano);
+  color: var(--ciano);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.35);
+}
+
+/* ---------- Alertas & Mensagens de Feedback ---------- */
+.alert-box {
+  display: none;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-sm);
+  font: 500 0.82rem var(--mono);
+  margin-bottom: 1.25rem;
+  animation: fadeIn 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.alert-box.visible {
+  display: flex;
+}
+
+.alert-error {
+  background-color: rgba(255, 90, 118, 0.12);
+  border: 1px solid var(--erro);
+  border-left: 3px solid var(--erro);
+  color: #ff859b;
+}
+
+.alert-success {
+  background-color: rgba(45, 255, 122, 0.12);
+  border: 1px solid var(--verde);
+  border-left: 3px solid var(--verde);
+  color: #9affc4;
+}
+
+.alert-info {
+  background-color: rgba(0, 229, 255, 0.12);
+  border: 1px solid var(--ciano);
+  border-left: 3px solid var(--ciano);
+  color: #8cedff;
+}
+
+.alert-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+
+/* ---------- Crachás e Indicadores de Status (Com Losango) ---------- */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font: 700 0.72rem var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg);
+  transition: all var(--transition-fast);
+}
+
+.status-badge.enabled {
+  background-color: rgba(45, 255, 122, 0.14);
+  border: 1px solid var(--verde);
+  color: var(--verde);
+  box-shadow: 0 0 10px rgba(45, 255, 122, 0.2);
+}
+
+.status-badge.enabled .status-dot {
+  background-color: var(--verde);
+  box-shadow: 0 0 8px var(--verde);
+}
+
+.status-badge.disabled {
+  background-color: rgba(255, 183, 3, 0.14);
+  border: 1px solid var(--accent-warning);
+  color: var(--accent-warning);
+}
+
+.status-badge.disabled .status-dot {
+  background-color: var(--accent-warning);
+  box-shadow: 0 0 8px var(--accent-warning);
+}
+
+/* ---------- Indicador de Passos (Stepper) ---------- */
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding: 0.85rem 1rem;
+  background-color: rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--linha);
+  border-radius: var(--radius-sm);
+}
+
+.stepper-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  position: relative;
+  z-index: 1;
+}
+
+.stepper-circle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-sm);
+  background-color: rgba(4, 10, 7, 0.95);
+  border: 1px solid var(--linha);
+  color: var(--suave);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 0.82rem var(--mono);
+  transition: all var(--transition-fast);
+}
+
+.stepper-title {
+  font: 700 0.68rem var(--mono);
+  color: var(--suave);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: color var(--transition-fast);
+}
+
+.stepper-step.active .stepper-circle {
+  border-color: var(--ciano);
+  background-color: rgba(0, 229, 255, 0.18);
+  color: var(--ciano);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.45);
+}
+
+.stepper-step.active .stepper-title {
+  color: var(--ciano);
+}
+
+.stepper-step.completed .stepper-circle {
+  border-color: var(--verde);
+  background-color: var(--verde);
+  color: #040706;
+  box-shadow: 0 0 12px rgba(45, 255, 122, 0.4);
+}
+
+.stepper-step.completed .stepper-title {
+  color: var(--verde);
+}
+
+.stepper-line {
+  flex: 1;
+  height: 2px;
+  background-color: rgba(45, 255, 122, 0.18);
+  margin: 0 0.5rem -0.75rem 0.5rem;
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.stepper-line.completed {
+  background-color: var(--verde);
+  box-shadow: 0 0 8px var(--verde);
+}
+
+@media (max-width: 400px) {
+  .stepper {
+    padding: 0.65rem 0.5rem;
+  }
+  .stepper-circle {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.75rem;
+  }
+  .stepper-title {
+    font-size: 0.62rem;
+  }
+  .stepper-line {
+    margin: 0 0.25rem -0.75rem 0.25rem;
+  }
+}

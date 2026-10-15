@@ -1,0 +1,409 @@
+/* ==========================================================================
+   Estilos Específicos de Contextos e Telas (Views) — Cyberpunk
+   ========================================================================== */
+
+/* ---------- 1. Contexto de Login & Credenciais de Demonstração ---------- */
+.demo-credentials-box {
+  background-color: rgba(0, 0, 0, 0.45);
+  border: 1px dashed var(--linha);
+  border-left: 3px solid var(--ciano);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  margin-top: 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--suave);
+}
+
+.demo-credentials-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.demo-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ciano);
+  letter-spacing: 0.08em;
+}
+
+.btn-autofill {
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid var(--linha-ciano);
+  color: var(--ciano);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.btn-autofill:hover {
+  background: rgba(0, 229, 255, 0.25);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.35);
+}
+
+.demo-credential-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 1.7;
+}
+
+.demo-credential-row code {
+  color: var(--verde);
+  background-color: rgba(0, 0, 0, 0.65);
+  border: 1px solid var(--linha);
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+
+/* ---------- 2. Contexto de Dashboard / Perfil Autenticado ---------- */
+.user-profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--linha);
+  margin-bottom: 1.25rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-avatar {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-sm);
+  background-color: rgba(0, 229, 255, 0.12);
+  border: 1px solid var(--linha-ciano);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ciano);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+}
+
+.user-name {
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--texto);
+}
+
+.user-email-label {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--suave);
+  letter-spacing: 0.04em;
+}
+
+.mfa-action-card {
+  background-color: rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--linha);
+  border-left: 3px solid var(--verde);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  backdrop-filter: blur(4px);
+}
+
+#section-mfa-disable-card {
+  border-left: 3px solid var(--erro);
+}
+
+.mfa-action-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.mfa-shield-icon {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: var(--radius-sm);
+  background-color: rgba(45, 255, 122, 0.12);
+  border: 1px solid var(--verde);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--verde);
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(45, 255, 122, 0.2);
+}
+
+.dashboard-footer-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.dashboard-footer-actions .btn {
+  flex: 1;
+}
+
+/* ---------- 3. Contexto do Wizard de Configuração do 2FA ---------- */
+.setup-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.app-recommendation-box {
+  background-color: rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--linha);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.app-recommendation-title {
+  font: 700 0.72rem var(--mono);
+  color: var(--ciano);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.app-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.app-tag {
+  font: 600 0.72rem var(--mono);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  background-color: rgba(4, 10, 7, 0.95);
+  border: 1px solid var(--linha);
+  color: var(--texto);
+}
+
+.setup-instruction {
+  font: 400 0.92rem/1.55 var(--sans);
+  color: var(--texto);
+  margin-bottom: 0.85rem;
+}
+
+.setup-instruction strong {
+  color: var(--ciano);
+}
+
+.setup-instruction-subtle {
+  font: 400 0.82rem var(--mono);
+  color: var(--suave);
+  margin: 0.85rem 0 0.4rem 0;
+}
+
+.setup-qr-wrapper {
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+.qr-code-wrapper {
+  background-color: #ffffff;
+  padding: 0.85rem;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  margin: 1rem 0;
+  border: 2px solid var(--verde);
+  box-shadow: 0 0 24px rgba(45, 255, 122, 0.3);
+  max-width: 100%;
+}
+
+.qr-code-img {
+  display: block;
+  width: 180px;
+  height: 180px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.secret-copy-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.55);
+  border: 1px solid var(--linha);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.secret-key-text {
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ciano);
+  word-break: break-all;
+}
+
+/* Bloco Didático RFC 6238 */
+.didactic-accordion {
+  background-color: rgba(4, 7, 6, 0.75);
+  border: 1px solid var(--linha);
+  border-left: 3px solid var(--ciano);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.9rem;
+  margin-top: 1.25rem;
+  font-size: 0.825rem;
+}
+
+.didactic-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: var(--ciano);
+  font: 700 0.8rem var(--mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.didactic-summary:hover {
+  text-decoration: underline;
+}
+
+.didactic-content {
+  margin-top: 0.75rem;
+  color: var(--suave);
+  line-height: 1.6;
+  border-top: 1px dashed var(--linha);
+  padding-top: 0.75rem;
+}
+
+.otpauth-preview {
+  margin: 0.6rem 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--linha);
+  overflow-x: auto;
+}
+
+.otpauth-code {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--verde);
+  word-break: break-all;
+}
+
+.setup-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* Sucesso do Setup */
+.setup-success-card {
+  text-align: center;
+  padding: 1.5rem 0.5rem 0.5rem;
+}
+
+.success-icon-wrapper {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.25rem;
+  border: 2px solid var(--verde);
+  color: var(--verde);
+  box-shadow: 0 0 20px rgba(45, 255, 122, 0.45);
+  transform: rotate(45deg);
+  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.success-icon-wrapper svg {
+  transform: rotate(-45deg);
+}
+
+@keyframes popIn {
+  0% { transform: rotate(45deg) scale(0.5); opacity: 0; }
+  100% { transform: rotate(45deg) scale(1); opacity: 1; }
+}
+
+.success-title {
+  font: 700 1.5rem var(--sans);
+  color: var(--verde);
+  text-shadow: 0 0 12px rgba(45, 255, 122, 0.35);
+  margin-bottom: 0.5rem;
+}
+
+.success-description {
+  font: 400 0.92rem/1.55 var(--sans);
+  color: var(--texto);
+  margin-bottom: 1.5rem;
+}
+
+.security-tip-box {
+  background-color: rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--linha);
+  border-left: 3px solid var(--accent-warning);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem;
+  font: 400 0.825rem/1.55 var(--mono);
+  color: var(--suave);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  text-align: left;
+}
+
+.security-tip-box svg {
+  color: var(--accent-warning);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+/* ---------- 4. Responsividade Mobile Específica das Telas ---------- */
+@media (max-width: 480px) {
+  .totp-input {
+    font-size: 1.55rem;
+    letter-spacing: 0.25em;
+    padding: 0.65rem 0.5rem;
+  }
+
+  .dashboard-footer-actions {
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .user-profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .demo-credential-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .secret-copy-box {
+    gap: 0.4rem;
+    padding: 0.5rem 0.65rem;
+  }
+
+  .secret-key-text {
+    font-size: 0.78rem;
+  }
+}
