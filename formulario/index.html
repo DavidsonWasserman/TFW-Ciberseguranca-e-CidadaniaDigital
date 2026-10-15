@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#040706">
+<title>Feedback | Segurança Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<!-- Barra de progresso do celular -->
+<div class="topo" aria-live="polite">
+  <span class="contador">0/10</span>
+  <div class="barra"><i></i></div>
+</div>
+
+<div class="layout">
+  <header class="intro">
+    <p class="etiqueta">// check-up de segurança digital</p>
+    <h1>Como foi a atividade de segurança digital?</h1>
+    <p class="lead">10 perguntas, cerca de 2 minutos. Não pedimos nome nem e-mail. <span class="dica">Toque numa resposta para avançar.</span></p>
+
+    <!-- Progresso do desktop -->
+    <div class="lateral-prog" aria-live="polite">
+      <span class="contador">0<small>/10</small></span>
+      <div class="barra"><i></i></div>
+      <p>perguntas respondidas</p>
+    </div>
+  </header>
+
+  <main>
+    <form id="f" novalidate></form>
+
+    <section class="fim" id="fim" hidden>
+      <div class="ok" aria-hidden="true"><span>✓</span></div>
+      <h2>Respostas enviadas</h2>
+      <p>Obrigado por participar da atividade.</p>
+      <p class="teste" id="teste" hidden>Modo de teste: a URL do Apps Script ainda não foi configurada, então nada foi gravado.</p>
+    </section>
+  </main>
+</div>
+
+<script>
+/* URL do Web App do Apps Script (termina em /exec) */
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbzlj6WZ2AxyfXpjjk8OxmcB2rbpmCnk-iz93HroWSlaWYRWvwUympZlG991PtQ8ddJvdw/exec";
+
+const PERGUNTAS = [
+  ["Depois da experiência de hoje, você mudou sua opinião sobre o quanto uma publicação em redes sociais pode revelar sobre sua rotina ou localização?",
+    ["Sim, mudei bastante","Um pouco","Não mudou, já sabia","Não mudou, ainda não percebo o risco"]],
+  ["Você sabia, antes de hoje, que fotos do celular podem carregar metadados como modelo do aparelho e coordenadas de GPS?",
+    ["Já sabia","Descobri hoje","Ainda não entendi bem"]],
+  ["Você conseguiria agora explicar o que é autenticação em dois fatores?",
+    ["Sim, consigo explicar","Entendo melhor que antes, mas ainda tenho dúvidas","Continuo sem entender"]],
+  ["Você se sente mais preparado(a) para identificar uma tentativa de phishing depois de hoje?",
+    ["Sim, muito mais","Um pouco mais","Não notei diferença"]],
+  ["Qual das três estações você achou mais marcante?",
+    ["Estação 1 — Rastros Digitais","Estação 2 — Segurança de Senhas","Estação 3 — Defesa Digital","Gostei igualmente de todas"]],
+  ["Depois desta atividade, você pretende revisar alguma prática relacionada à sua segurança digital?",
+    ["Sim","Talvez","Não"]],
+  ["Qual prática você considera mais provável adotar ou revisar?",
+    ["Criar senhas mais seguras","Evitar reutilizar senhas","Ativar autenticação em dois fatores",
+     "Ter mais cuidado com informações publicadas nas redes sociais","Aprender a identificar tentativas de phishing","Nenhuma das alternativas"]],
+  ["Como você avalia a atividade no geral?",
+    ["Muito ruim","Ruim","Regular","Boa","Muito boa"]],
+  ["O Check-up de Segurança Digital no final te fez refletir sobre seus próprios hábitos?",
+    ["Sim, bastante","Um pouco","Não muito"]],
+  ["De 0 a 10, o quanto essa experiência contribuiu para sua consciência sobre segurança digital?", "escala"]
+];
+
+const form = document.getElementById("f");
+const total = PERGUNTAS.length;
+const reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const mq = matchMedia("(max-width: 899px)"); // abaixo disso (celular e tablet em pé): slides
+const trilho = document.createElement("div");
+trilho.className = "trilho";
+form.appendChild(trilho);
+
+PERGUNTAS.forEach(([texto, ops], i) => {
+  const n = i + 1;
+  const escala = ops === "escala";
+  const lista = escala ? Array.from({length: 11}, (_, k) => String(k)) : ops;
+  const itens = lista.map(o => `
+    <label class="opt"><input type="radio" name="q${n}" value="${o}">
+      <span class="box">${escala ? "" : '<i class="mark"></i>'}<span>${o}</span></span></label>`).join("");
+  const fs = document.createElement("fieldset");
+  fs.className = "q"; fs.id = "p" + n; fs.tabIndex = -1;
+  fs.innerHTML = `<legend><span class="n">${String(n).padStart(2, "0")} / ${total}</span>${texto}</legend>
+    <div class="${escala ? "scale" : "opts"}">${itens}</div>
+    ${escala ? '<div class="ends"><span>Nada</span><span>Muitíssimo</span></div>' : ""}
+    <p class="msg">Escolha uma opção para continuar.</p>`;
+  trilho.appendChild(fs);
+});
+form.insertAdjacentHTML("beforeend",
+  '<p class="aviso" id="aviso" role="alert"></p>' +
+  '<div class="nav"><button type="button" class="volta" id="volta">Voltar</button>' +
+  '<button class="send" type="submit" id="btn">Enviar respostas</button></div>');
+
+// Resposta da pergunta n ("" se não respondida ou se a pergunta não existir)
+const resp = n => { const c = form.elements["q" + n]; return c ? c.value : ""; };
+const btn = document.getElementById("btn");
+const aviso = document.getElementById("aviso");
+const volta = document.getElementById("volta");
+const cabeca = document.querySelector(".intro");
+const paineis = [...trilho.querySelectorAll(".q")]; // só as perguntas, nunca a tela final
+let idx = 0, timer;
+
+function atualizar() {
+  const feitas = PERGUNTAS.filter((_, i) => resp(i + 1)).length;
+  const v = mq.matches ? idx + 1 : feitas; // slides: posição atual; desktop: respondidas
+  const pct = (v / total * 100) + "%";
+  document.querySelectorAll(".topo .contador").forEach(el => el.textContent = v + "/" + total);
+  document.querySelectorAll(".lateral-prog .contador").forEach(el => el.innerHTML = v + "<small>/" + total + "</small>");
+  document.querySelectorAll(".barra i").forEach(el => el.style.width = pct);
+}
+
+function ir(n, foco = true) {
+  idx = Math.max(0, Math.min(total - 1, n));
+  paineis.forEach((p, i) => {
+    p.classList.toggle("ativo", i === idx);
+    p.classList.toggle("antes", i < idx);
+    p.classList.toggle("depois", i > idx);
+  });
+  form.classList.toggle("ultima", idx === total - 1);
+  form.classList.toggle("primeira", idx === 0);
+  volta.hidden = idx === 0;
+  cabeca.hidden = idx > 0;   // no celular, o título só aparece na primeira pergunta
+  aviso.textContent = "";
+  atualizar();
+  scrollTo({top: 0, behavior: reduz ? "auto" : "smooth"});
+  if (foco) paineis[idx].focus({preventScroll: true});
+}
+
+function modo() {
+  form.classList.toggle("slides", mq.matches);
+  document.documentElement.classList.toggle("mobile", mq.matches);
+  if (mq.matches) ir(idx, false);
+  else {
+    paineis.forEach(p => p.classList.remove("ativo", "antes", "depois"));
+    form.classList.remove("ultima", "primeira");
+    cabeca.hidden = false;
+    atualizar();
+  }
+}
+mq.addEventListener("change", modo);
+
+form.addEventListener("change", e => {
+  e.target.closest(".q")?.classList.remove("err");
+  aviso.textContent = "";
+  atualizar();
+});
+// click (e não change) para avançar também quando tocar de novo na opção já marcada
+form.addEventListener("click", e => {
+  if (!mq.matches || !e.target.matches(".opt input")) return;
+  const n = +e.target.name.slice(1); // número da pergunta = índice da próxima
+  if (n - 1 === idx && idx < total - 1) {
+    clearTimeout(timer);
+    timer = setTimeout(() => ir(n), 280); // dá tempo de ver a opção marcada
+  }
+});
+volta.addEventListener("click", () => ir(idx - 1));
+
+// Deslizar o dedo: esquerda avança (se já respondeu), direita volta
+let x0 = null, y0 = 0;
+form.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, {passive: true});
+form.addEventListener("touchend", e => {
+  if (!mq.matches || x0 === null) return;
+  const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+  x0 = null;
+  if (Math.abs(dx) < 70 || Math.abs(dy) > 50) return;
+  if (dx < 0 && resp(idx + 1) && idx < total - 1) ir(idx + 1);
+  else if (dx > 0 && idx > 0) ir(idx - 1);
+}, {passive: true});
+
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  const faltando = PERGUNTAS.map((_, i) => i + 1).filter(n => !resp(n));
+  paineis.forEach((q, i) => q.classList.toggle("err", !resp(i + 1)));
+  if (faltando.length) {
+    if (mq.matches) ir(faltando[0] - 1);
+    else {
+      const el = document.getElementById("p" + faltando[0]);
+      el.scrollIntoView({behavior: reduz ? "auto" : "smooth", block: "center"});
+      el.querySelector("input").focus({preventScroll: true});
+    }
+    aviso.textContent = faltando.length === 1 ? "Falta 1 pergunta." : `Faltam ${faltando.length} perguntas.`;
+    return;
+  }
+  const dados = {};
+  PERGUNTAS.forEach((_, i) => dados["q" + (i + 1)] = resp(i + 1));
+  btn.disabled = true; btn.textContent = "Enviando...";
+  try {
+    if (ENDPOINT) {
+      await fetch(ENDPOINT, {method: "POST", mode: "no-cors",
+        headers: {"Content-Type": "text/plain;charset=utf-8"}, body: JSON.stringify(dados)});
+    } else {
+      console.log("Modo de teste, dados não enviados:", dados);
+      document.getElementById("teste").hidden = false;
+    }
+    form.hidden = true;
+    document.body.classList.add("enviado"); // só o cartão de confirmação, centralizado
+    document.querySelectorAll(".topo,.intro").forEach(el => el.hidden = true);
+    document.getElementById("fim").hidden = false;
+    scrollTo(0, 0);
+  } catch (err) {
+    aviso.textContent = "Não foi possível enviar. Verifique a conexão e tente de novo.";
+    btn.disabled = false; btn.textContent = "Enviar respostas";
+  }
+});
+modo();
+</script>
+</body>
+</html>
